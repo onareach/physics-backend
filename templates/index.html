@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Physics Formulas</title>
+    <!-- Ensure MathJax is loaded -->
+    <script type="text/javascript" async
+        src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>Physics Formulas</h1>
+    <ul>
+        {% for formula in formulas %}
+            <li>{{ formula.formula_name }}: <span>$$ {{ formula.latex }} $$</span></li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        // Ensure MathJax processes the page after it loads
+        window.onload = function() {
+            MathJax.typeset();
+        };
+    </script>
+</body>
+</html>
