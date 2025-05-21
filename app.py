@@ -12,11 +12,10 @@ import os
 app = Flask(__name__)
 
 # Below are the local host and Vercel production URL origins are permitted.
-CORS(app)  # temporarily allow all origins
-# CORS(app, origins=[
-#    "http://localhost:3000",  # Local development
-#    "https://physicswebprod.vercel.app",  # Deployed Vercel site
-#])
+CORS(app, origins=[
+    "http://localhost:3000",  # Local development
+    "https://physicswebprod.vercel.app"  # Deployed Vercel site
+])
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 

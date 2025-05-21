@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document provides guidelines and examples for inserting LaTeX-formatted math into the text field of a  PostgreSQL database. It provides a table LaTeX codes (beginning with a backslash "\") and addresses formatting and escaping for complex math expressions.
+This document provides guidelines and examples for inserting LaTeX-formatted math into the text field of a  PostgreSQL database. It provides a table of LaTeX codes (that being with a backslash) and addresses formatting and escaping for complex math expressions.
 
 
 
