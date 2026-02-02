@@ -32,8 +32,9 @@ if OPENAI_API_KEY:
     openai.api_key = OPENAI_API_KEY
 
 def get_formulas():
-    # Use sslmode=require for production (Heroku), disable for local development
-    sslmode = "require" if "herokuapp.com" in DATABASE_URL else "disable"
+    # Use sslmode=require for production (Heroku uses postgres://), disable for local development
+    # Heroku DATABASE_URL starts with postgres://, local uses postgresql://
+    sslmode = "require" if DATABASE_URL.startswith("postgres://") else "disable"
     conn = psycopg2.connect(DATABASE_URL, sslmode=sslmode)
     cursor = conn.cursor()
     cursor.execute("SELECT id, formula_name, latex, display_order, formula_description, english_verbalization FROM formula ORDER BY display_order;")
@@ -46,8 +47,8 @@ def get_formulas():
 
 # Function to fetch a single formula by ID
 def get_formula_by_id(formula_id):
-    # Use sslmode=require for production (Heroku), disable for local development
-    sslmode = "require" if "herokuapp.com" in DATABASE_URL else "disable"
+    # Use sslmode=require for production (Heroku uses postgres://), disable for local development
+    sslmode = "require" if DATABASE_URL.startswith("postgres://") else "disable"
     conn = psycopg2.connect(DATABASE_URL, sslmode=sslmode)
     cursor = conn.cursor()
     cursor.execute("SELECT id, formula_name, latex, display_order, formula_description, english_verbalization FROM formula WHERE id = %s;", (formula_id,))
@@ -68,8 +69,8 @@ def get_formula_by_id(formula_id):
         return None
 
 def get_applications():
-    # Use sslmode=require for production (Heroku), disable for local development
-    sslmode = "require" if "herokuapp.com" in DATABASE_URL else "disable"
+    # Use sslmode=require for production (Heroku uses postgres://), disable for local development
+    sslmode = "require" if DATABASE_URL.startswith("postgres://") else "disable"
     conn = psycopg2.connect(DATABASE_URL, sslmode=sslmode)
     cursor = conn.cursor()
     cursor.execute("SELECT id, title, problem_text, subject_area, image_filename, image_text, created_at FROM application ORDER BY created_at DESC;")
@@ -81,7 +82,9 @@ def get_applications():
     return result
 
 def get_application_by_id(application_id):
-    conn = psycopg2.connect(DATABASE_URL, sslmode="require")
+    # Use sslmode=require for production (Heroku uses postgres://), disable for local development
+    sslmode = "require" if DATABASE_URL.startswith("postgres://") else "disable"
+    conn = psycopg2.connect(DATABASE_URL, sslmode=sslmode)
     cursor = conn.cursor()
     cursor.execute("SELECT id, title, problem_text, subject_area, image_filename, image_text, created_at FROM application WHERE id = %s;", (application_id,))
     application = cursor.fetchone()
